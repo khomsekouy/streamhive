@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useUsersStore } from './users'
 
 export type Role = 'viewer' | 'creator' | 'admin'
 
@@ -26,12 +27,24 @@ export const useAuthStore = defineStore('auth', {
     async login(email: string, _password: string) {
       // Mock — replace with real API call once backend exists.
       await new Promise((resolve) => setTimeout(resolve, 300))
-      this.user = {
-        id: 'u_demo',
-        username: email.split('@')[0] || 'demo',
-        email,
-        role: 'viewer'
-      }
+
+      const users = useUsersStore()
+      const match = users.byEmail(email)
+
+      this.user = match
+        ? {
+            id: match.id,
+            username: match.username,
+            email: match.email,
+            role: match.role,
+            avatarUrl: match.avatarUrl,
+          }
+        : {
+            id: 'u_demo',
+            username: email.split('@')[0] || 'demo',
+            email,
+            role: 'viewer',
+          }
       this.token = 'mock-token'
     },
 
