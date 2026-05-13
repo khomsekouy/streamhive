@@ -1,79 +1,31 @@
 <script setup lang="ts">
 const streams = [
-  { id: 'abc123', title: 'Coding a Nuxt app', streamer: 'Ada', viewers: 142 },
-  { id: 'def456', title: 'Late night chill stream', streamer: 'Ben', viewers: 87 },
-  { id: 'ghi789', title: 'Cooking with Kim', streamer: 'Kim', viewers: 305 }
+  { id: 'abc123', title: 'Coding a Nuxt app from scratch', streamer: 'Ada', viewers: 142, category: 'Coding' },
+  { id: 'def456', title: 'Late night chill stream', streamer: 'Ben', viewers: 87, category: 'Just Chatting' },
+  { id: 'ghi789', title: 'Cooking with Kim — Khmer noodle special', streamer: 'Kim', viewers: 305, category: 'Cooking' },
+  { id: 'jkl012', title: 'Speedrun attempt #42', streamer: 'Leo', viewers: 1203, category: 'Gaming' },
+  { id: 'mno345', title: 'Lo-fi beats while I draw', streamer: 'Mia', viewers: 64, category: 'Art' },
+  { id: 'pqr678', title: 'Q&A — ask me anything about web dev', streamer: 'Nico', viewers: 512, category: 'Coding' }
 ]
 </script>
 
 <template>
   <section>
-    <h1>Live now</h1>
-    <div class="grid">
-      <NuxtLink
+    <div class="mb-6 flex items-end justify-between">
+      <h1 class="text-2xl font-bold">Live now</h1>
+      <span class="text-sm text-zinc-400">{{ streams.length }} streams</span>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <StreamCard
         v-for="s in streams"
         :key="s.id"
-        :to="`/stream/${s.id}`"
-        class="card"
-      >
-        <div class="thumb">LIVE</div>
-        <div class="info">
-          <div class="title">{{ s.title }}</div>
-          <div class="meta">{{ s.streamer }} &middot; {{ s.viewers }} viewers</div>
-        </div>
-      </NuxtLink>
+        :id="s.id"
+        :title="s.title"
+        :streamer="s.streamer"
+        :viewers="s.viewers"
+        :category="s.category"
+      />
     </div>
   </section>
 </template>
-
-<style scoped>
-h1 {
-  margin-bottom: 1.5rem;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-}
-
-.card {
-  background: #1a1d23;
-  border: 1px solid #2a2d33;
-  border-radius: 10px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.15s;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  border-color: #6c5ce7;
-}
-
-.thumb {
-  background: #2a2d33;
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: #e74c3c;
-  letter-spacing: 0.1em;
-}
-
-.info {
-  padding: 0.75rem 1rem;
-}
-
-.title {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.meta {
-  font-size: 0.875rem;
-  color: #888;
-}
-</style>

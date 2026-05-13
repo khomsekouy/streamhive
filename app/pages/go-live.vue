@@ -1,80 +1,50 @@
+<script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+
+const auth = useAuthStore()
+const title = ref('')
+const category = ref('')
+
+function startStream() {
+  if (!auth.isLoggedIn) return
+  // Will wire up to backend later.
+  alert(`(stub) Would start stream: ${title.value} [${category.value}]`)
+}
+</script>
+
 <template>
-  <section class="go-live">
-    <h1>Go live</h1>
-    <p>Set up your stream details. (We'll wire up a real streaming provider later.)</p>
+  <section class="mx-auto max-w-lg">
+    <h1 class="text-2xl font-bold">Go live</h1>
+    <p class="mt-1 text-zinc-400">
+      Set up your stream details. (We'll wire up a real streaming provider later.)
+    </p>
 
-    <form class="form" @submit.prevent>
-      <label>
-        <span>Title</span>
-        <input v-model="title" placeholder="My awesome stream" />
-      </label>
+    <div
+      v-if="!auth.isLoggedIn"
+      class="mt-6 rounded-lg border border-amber-700/40 bg-amber-900/20 p-4 text-sm text-amber-200"
+    >
+      You need to <NuxtLink to="/login" class="underline">log in</NuxtLink> before going live.
+    </div>
 
-      <label>
-        <span>Category</span>
-        <input v-model="category" placeholder="Coding, Music, Gaming…" />
-      </label>
+    <form class="mt-6 space-y-4" @submit.prevent="startStream">
+      <div>
+        <label class="label" for="title">Title</label>
+        <input id="title" v-model="title" class="input" placeholder="My awesome stream" />
+      </div>
 
-      <button class="btn" type="submit">Start stream</button>
+      <div>
+        <label class="label" for="category">Category</label>
+        <input
+          id="category"
+          v-model="category"
+          class="input"
+          placeholder="Coding, Music, Gaming…"
+        />
+      </div>
+
+      <button class="btn btn-primary" type="submit" :disabled="!auth.isLoggedIn">
+        Start stream
+      </button>
     </form>
   </section>
 </template>
-
-<script setup lang="ts">
-const title = ref('')
-const category = ref('')
-</script>
-
-<style scoped>
-.go-live {
-  max-width: 480px;
-}
-
-h1 {
-  margin-bottom: 0.5rem;
-}
-
-p {
-  color: #888;
-  margin-bottom: 2rem;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-label span {
-  font-size: 0.875rem;
-  color: #b8b8b8;
-}
-
-input {
-  padding: 0.6rem 0.75rem;
-  background: #1a1d23;
-  border: 1px solid #2a2d33;
-  border-radius: 6px;
-  color: #e6e6e6;
-}
-
-.btn {
-  padding: 0.75rem 1rem;
-  background: #6c5ce7;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  align-self: flex-start;
-}
-
-.btn:hover {
-  filter: brightness(1.1);
-}
-</style>

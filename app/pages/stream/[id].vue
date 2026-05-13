@@ -1,84 +1,60 @@
 <script setup lang="ts">
 const route = useRoute()
 const streamId = route.params.id as string
+
+interface ChatMessage {
+  id: number
+  user: string
+  text: string
+}
+
+const messages = ref<ChatMessage[]>([
+  { id: 1, user: 'Ada', text: 'hello everyone!' },
+  { id: 2, user: 'Ben', text: 'hi from Phnom Penh' },
+  { id: 3, user: 'Kim', text: 'first time on this stream, looks great' }
+])
+const draft = ref('')
+
+function send() {
+  const text = draft.value.trim()
+  if (!text) return
+  messages.value.push({ id: Date.now(), user: 'You', text })
+  draft.value = ''
+}
 </script>
 
 <template>
-  <section class="watch">
-    <div class="player">
-      <div class="placeholder">Video player goes here<br />(stream id: {{ streamId }})</div>
-    </div>
-    <aside class="chat">
-      <div class="chat-header">Chat</div>
-      <div class="chat-body">
-        <p class="msg"><b>Ada:</b> hello!</p>
-        <p class="msg"><b>Ben:</b> hi from Vietnam</p>
+  <section class="grid gap-4 lg:grid-cols-[1fr_320px]">
+    <div>
+      <div class="flex aspect-video items-center justify-center rounded-xl border border-white/10 bg-stadium-elevated text-zinc-500">
+        <div class="text-center">
+          <div class="text-lg font-semibold text-zinc-300">Video player placeholder</div>
+          <div class="mt-1 text-sm">stream id: {{ streamId }}</div>
+        </div>
       </div>
-      <input class="chat-input" placeholder="Send a message" />
+
+      <div class="mt-4">
+        <h1 class="text-xl font-bold">Stream title goes here</h1>
+        <div class="mt-1 text-sm text-zinc-400">
+          Streamer name &middot; 142 viewers &middot; Coding
+        </div>
+      </div>
+    </div>
+
+    <aside class="card flex h-[600px] flex-col lg:h-auto">
+      <div class="border-b border-white/10 px-4 py-3 font-semibold">Live chat</div>
+
+      <div class="flex-1 space-y-2 overflow-y-auto px-4 py-3 text-sm">
+        <p v-for="m in messages" :key="m.id">
+          <span class="font-semibold text-emerald-400">{{ m.user }}:</span>
+          <span class="ml-1 text-zinc-200">{{ m.text }}</span>
+        </p>
+      </div>
+
+      <form class="flex gap-2 border-t border-white/10 p-3" @submit.prevent="send">
+        <input v-model="draft" class="input" placeholder="Send a message" />
+        <button type="submit" class="btn btn-primary px-3">Send</button>
+      </form>
     </aside>
   </section>
 </template>
-
-<style scoped>
-.watch {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 1rem;
-  height: calc(100vh - 180px);
-}
-
-@media (max-width: 800px) {
-  .watch {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-}
-
-.player {
-  background: #000;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 16 / 9;
-}
-
-.placeholder {
-  color: #888;
-  text-align: center;
-}
-
-.chat {
-  background: #1a1d23;
-  border: 1px solid #2a2d33;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-header {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #2a2d33;
-  font-weight: 600;
-}
-
-.chat-body {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  overflow-y: auto;
-}
-
-.msg {
-  margin: 0 0 0.5rem;
-  font-size: 0.9rem;
-}
-
-.chat-input {
-  margin: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: #0f1115;
-  border: 1px solid #2a2d33;
-  border-radius: 6px;
-  color: #e6e6e6;
-}
-</style>

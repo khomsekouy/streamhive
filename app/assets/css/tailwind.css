@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-stadium text-zinc-100;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+
+  ::selection {
+    @apply bg-emerald-500/40 text-white;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium transition disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-emerald-500 text-zinc-950 hover:bg-emerald-400 active:bg-emerald-600;
+  }
+
+  .btn-ghost {
+    @apply border border-white/10 text-zinc-100 hover:bg-white/5 hover:border-white/20;
+  }
+
+  .input {
+    @apply w-full rounded-md border border-white/10 bg-stadium-card px-3 py-2 text-zinc-100 placeholder-zinc-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500;
+  }
+
+  .label {
+    @apply mb-1 block text-sm font-medium text-zinc-300;
+  }
+
+  .card {
+    @apply rounded-xl border border-white/10 bg-stadium-card;
+  }
+
+  .badge-live {
+    @apply inline-flex items-center gap-1.5 rounded-md bg-red-600/90 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white;
+  }
+}
