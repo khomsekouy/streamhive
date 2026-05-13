@@ -24,18 +24,39 @@ function handleLogout() {
           <span>Stream<span class="text-emerald-400">Hive</span></span>
         </NuxtLink>
 
-        <nav class="hidden items-center gap-1 text-sm md:flex">
+        <nav class="hidden items-center gap-1 text-sm font-medium md:flex">
           <NuxtLink
             to="/"
-            class="relative px-3 py-2 text-zinc-300 hover:text-white"
-            active-class="!text-emerald-400"
+            class="relative rounded-md px-3 py-2 text-zinc-300 transition hover:text-white"
+            exact-active-class="!text-emerald-400 [&>span]:!block"
           >
             Live
-            <span class="absolute inset-x-3 -bottom-0.5 hidden h-0.5 rounded-full bg-emerald-400 router-link-exact-active:block" />
+            <span class="pointer-events-none absolute inset-x-3 -bottom-0.5 hidden h-0.5 rounded-full bg-emerald-400" />
           </NuxtLink>
-          <NuxtLink to="/matches" class="px-3 py-2 text-zinc-300 hover:text-white" active-class="text-white">Matches</NuxtLink>
-          <NuxtLink to="/teams" class="px-3 py-2 text-zinc-300 hover:text-white" active-class="text-white">Teams</NuxtLink>
-          <NuxtLink to="/leagues" class="px-3 py-2 text-zinc-300 hover:text-white" active-class="text-white">Leagues</NuxtLink>
+          <NuxtLink
+            to="/matches"
+            class="relative rounded-md px-3 py-2 text-zinc-300 transition hover:text-white"
+            active-class="!text-emerald-400 [&>span]:!block"
+          >
+            Matches
+            <span class="pointer-events-none absolute inset-x-3 -bottom-0.5 hidden h-0.5 rounded-full bg-emerald-400" />
+          </NuxtLink>
+          <NuxtLink
+            to="/teams"
+            class="relative rounded-md px-3 py-2 text-zinc-300 transition hover:text-white"
+            active-class="!text-emerald-400 [&>span]:!block"
+          >
+            Teams
+            <span class="pointer-events-none absolute inset-x-3 -bottom-0.5 hidden h-0.5 rounded-full bg-emerald-400" />
+          </NuxtLink>
+          <NuxtLink
+            to="/leagues"
+            class="relative rounded-md px-3 py-2 text-zinc-300 transition hover:text-white"
+            active-class="!text-emerald-400 [&>span]:!block"
+          >
+            Leagues
+            <span class="pointer-events-none absolute inset-x-3 -bottom-0.5 hidden h-0.5 rounded-full bg-emerald-400" />
+          </NuxtLink>
         </nav>
 
         <div class="relative ml-auto hidden flex-1 max-w-md lg:block">
